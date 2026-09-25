@@ -22,6 +22,18 @@ jobs:
       - name: Generate Android project files
         run: flutter create --platforms=android .
 
+      - name: Set Android compile SDK
+        run: |
+          if [ -f android/app/build.gradle.kts ]; then
+            sed -i 's/compileSdk = flutter.compileSdkVersion/compileSdk = 35/' android/app/build.gradle.kts
+          fi
+
+          if [ -f android/app/build.gradle ]; then
+            sed -i 's/compileSdkVersion flutter.compileSdkVersion/compileSdkVersion 35/' android/app/build.gradle
+          fi
+
+          echo "compileSdk updated to 35"
+
       - name: Get dependencies
         run: flutter pub get
 
